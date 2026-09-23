@@ -20,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.mymcd.shifts.legal.LegalAssets
 import eu.mymcd.shifts.notify.Notifier
 import eu.mymcd.shifts.store.SecureStore
+import eu.mymcd.shifts.store.SettingsStore
 import eu.mymcd.shifts.ui.AppRoot
 import eu.mymcd.shifts.ui.AppViewModel
 import eu.mymcd.shifts.util.LocaleUtil
@@ -39,13 +40,19 @@ class MainActivity : ComponentActivity() {
         LegalAssets.init(applicationContext)
         enableEdgeToEdge()
         Notifier.ensureChannel(this)
-        requestNotifPermissionIfNeeded()
+        if (SettingsStore(this).legalAccepted) {
+            requestNotifPermissionIfNeeded()
+        }
         setContent {
             MyMcDTheme {
                 val vm: AppViewModel = viewModel(factory = AppViewModel.Factory(applicationContext))
                 AppRoot(vm)
             }
         }
+    }
+
+    fun onLegalAccepted() {
+        requestNotifPermissionIfNeeded()
     }
 
     private fun requestNotifPermissionIfNeeded() {

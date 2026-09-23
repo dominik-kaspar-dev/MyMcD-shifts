@@ -90,4 +90,11 @@
     <string name="privacy_title">Zásady ochrany soukromí</string>
     <string name="legal_effective">Platné od: 23. září 2026</string>
     <string name="legal_disclaimer">Neoficiální pomocná aplikace. McDonald\'s a mymcd.eu jsou ochranné známky příslušných vlastníků.</string>
+
+    <string name="legal_gate_title">Vyžadujeme souhlas</string>
+    <string name="legal_gate_body">Zaškrtněte každý dokument pro pokračování. Před přijetím si je můžete přečíst. Odmítnutím se aplikace zavře a příště se znovu zeptá.</string>
+    <string name="legal_gate_view_doc">Číst dokument</string>
+    <string name="legal_gate_status">Naposledy potvrzeno: %1$s · Dokumenty změněny: %2$s</string>
+    <string name="legal_gate_accept">Přijmout a pokračovat</string>
+    <string name="legal_gate_decline">Odmítnout a zavřít</string>
 </resources>

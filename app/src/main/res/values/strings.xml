@@ -90,4 +90,11 @@
     <string name="privacy_title">Privacy Policy</string>
     <string name="legal_effective">Effective: 23 September 2026</string>
     <string name="legal_disclaimer">This is an unofficial utility app. McDonald\'s and mymcd.eu are trademarks of their respective owners.</string>
+
+    <string name="legal_gate_title">Terms required</string>
+    <string name="legal_gate_body">Check every document to continue. You can read each one before accepting. If you decline, the app closes and will ask again next time.</string>
+    <string name="legal_gate_view_doc">Read document</string>
+    <string name="legal_gate_status">Last confirmed: %1$s · Documents last changed: %2$s</string>
+    <string name="legal_gate_accept">Accept &amp; continue</string>
+    <string name="legal_gate_decline">Decline &amp; exit</string>
 </resources>

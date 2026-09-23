@@ -15,10 +15,14 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         LegalAssets.init(this)
+
+        val settings = SettingsStore(this)
+        // Do not start background work or notifications until legal consent.
+        if (!settings.legalAccepted) return
+
         Notifier.ensureChannel(this)
 
-        // Use user-configured interval (default 30 min).
-        val minutes = SettingsStore(this).refreshIntervalMin.toLong().coerceAtLeast(5L)
+        val minutes = settings.refreshIntervalMin.toLong().coerceAtLeast(5L)
         val wm = WorkManager.getInstance(this)
         val request = PeriodicWorkRequestBuilder<RefreshWorker>(minutes, TimeUnit.MINUTES).build()
         wm.enqueueUniquePeriodicWork(
@@ -27,7 +31,6 @@ class App : Application() {
             request
         )
 
-        // Restore any missed shift reminders after process death / reboot.
         try {
             ReminderScheduler.rescheduleAll(this)
         } catch (_: Throwable) {

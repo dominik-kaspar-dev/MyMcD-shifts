@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit
  * Re-run after every data refresh and when notification settings change.
  */
 object ReminderScheduler {
+    // Preference checks are done in rescheduleAll; early-out helper exists for callers.
 
     private const val TAG = "MyMcDReminders"
     private const val WORK_TAG = "shift_reminder"
@@ -29,6 +30,7 @@ object ReminderScheduler {
             wm.cancelAllWorkByTag(WORK_TAG)
 
             val settings = SettingsStore(context)
+            if (!settings.legalAccepted) return
             if (!settings.notifyDayOf && !settings.notifyDayBefore) return
 
             val repo = Repository.get(context)

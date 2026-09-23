@@ -92,7 +92,7 @@ fun LegalScreen(vm: AppViewModel) {
     }
 }
 
-private fun loadLegalBody(doc: LegalDoc, lang: String): String {
+internal fun loadLegalBody(doc: LegalDoc, lang: String): String {
     val name = when (doc) {
         LegalDoc.Eula -> if (lang == LocaleUtil.LANG_CS) "eula_cs.txt" else "eula_en.txt"
         LegalDoc.Terms -> if (lang == LocaleUtil.LANG_CS) "terms_cs.txt" else "terms_en.txt"

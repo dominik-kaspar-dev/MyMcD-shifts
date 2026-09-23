@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import eu.mymcd.shifts.data.RefreshResult
 import eu.mymcd.shifts.data.Repository
 import eu.mymcd.shifts.network.Shift
+import eu.mymcd.shifts.notify.Notifier
 import eu.mymcd.shifts.notify.ReminderScheduler
 import eu.mymcd.shifts.store.AccountMeta
 import eu.mymcd.shifts.store.SettingsStore
@@ -54,6 +55,8 @@ data class UiState(
     val pinWidgetStatus: String? = null,
     val settings: SettingsUi = SettingsUi(),
     val legalDoc: LegalDoc = LegalDoc.Eula,
+    val legalAccepted: Boolean = false,
+    val legalConfirmedAtMs: Long = 0L,
     val languageRevision: Int = 0
 )
 
@@ -68,7 +71,7 @@ class AppViewModel(context: Context) : ViewModel() {
 
     init {
         reloadFromStore()
-        if (repo.store.anyAccountConfigured()) {
+        if (repo.store.anyAccountConfigured() && settingsStore.legalAccepted) {
             refresh()
         }
     }
@@ -93,8 +96,37 @@ class AppViewModel(context: Context) : ViewModel() {
                 else -> Screen.Login
             },
             loginMode = LoginMode.SignIn,
-            settings = loadSettings()
+            settings = loadSettings(),
+            legalAccepted = settingsStore.legalAccepted,
+            legalConfirmedAtMs = settingsStore.lastLegalConfirmedAtMs
         )
+    }
+
+    fun acceptLegal() {
+        settingsStore.acceptLegalNow()
+        state = state.copy(
+            legalAccepted = true,
+            legalConfirmedAtMs = settingsStore.lastLegalConfirmedAtMs
+        )
+        Notifier.ensureChannel(appContext)
+        RefreshWorker.enqueuePeriodic(appContext)
+        rescheduleReminders()
+        if (repo.store.anyAccountConfigured()) refresh()
+        kickWorker()
+        findActivity(appContext)?.let { act ->
+            if (act is eu.mymcd.shifts.MainActivity) act.onLegalAccepted()
+        }
+    }
+
+    /** Decline: leave the app. Next launch shows the gate again. */
+    fun declineLegal() {
+        val act = findActivity(appContext)
+        act?.finishAffinity()
+        android.os.Process.killProcess(android.os.Process.myPid())
+    }
+
+    fun openLegalFromGate(doc: LegalDoc) {
+        state = state.copy(legalDoc = doc, screen = Screen.Legal)
     }
 
     private fun loadSettings(): SettingsUi = SettingsUi(

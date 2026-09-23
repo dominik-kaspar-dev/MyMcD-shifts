@@ -33,6 +33,11 @@ class RefreshWorker(
                 return@withContext Result.success()
             }
 
+            if (!SettingsStore(applicationContext).legalAccepted) {
+                ShiftWidgetReceiver.updateWidgets(applicationContext)
+                return@withContext Result.success()
+            }
+
             // Re-login handled inside McDClient.refreshAll when session is invalid.
             repo.refreshAllAccounts(notify = true)
             ShiftWidgetReceiver.updateWidgets(applicationContext)

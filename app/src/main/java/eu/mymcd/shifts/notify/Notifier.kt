@@ -76,6 +76,7 @@ object Notifier {
     ) {
         ensureChannel(context)
         if (!canNotify(context)) return
+        if (!SettingsStore(context).legalAccepted) return
 
         val settings = SettingsStore(context)
         val parts = mutableListOf<String>()
@@ -119,6 +120,7 @@ object Notifier {
     ) {
         ensureChannel(context)
         if (!canNotify(context)) return
+        if (!SettingsStore(context).legalAccepted) return
 
         val settings = SettingsStore(context)
         if (isDayBefore && !settings.notifyDayBefore) return

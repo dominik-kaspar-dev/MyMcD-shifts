@@ -5,6 +5,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import eu.mymcd.shifts.data.Repository
 import eu.mymcd.shifts.network.Shift
+import eu.mymcd.shifts.store.SettingsStore
 import eu.mymcd.shifts.util.TimeUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,6 +17,7 @@ class ReminderWorker(
 ) : CoroutineWorker(appContext, params) {
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
+        if (!SettingsStore(applicationContext).legalAccepted) return@withContext Result.success()
         val accountId = inputData.getString(KEY_ACCOUNT) ?: return@withContext Result.success()
         val shiftId = inputData.getLong(KEY_SHIFT_ID, -1L)
         val dayBefore = inputData.getBoolean(KEY_DAY_BEFORE, false)

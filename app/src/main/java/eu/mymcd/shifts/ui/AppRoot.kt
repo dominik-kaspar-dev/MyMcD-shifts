@@ -25,6 +25,9 @@ fun AppRoot(vm: AppViewModel) {
             Screen.Settings -> SettingsScreen(vm)
             Screen.Legal -> LegalScreen(vm)
         }
+        if (!state.legalAccepted) {
+            LegalGate(vm)
+        }
     }
 }
 
