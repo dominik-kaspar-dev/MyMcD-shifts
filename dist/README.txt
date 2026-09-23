@@ -1,5 +1,5 @@
 ========================================================
- MyMcD Shifts 1.1.0 — Android app (APK)
+ MyMcD Shifts 1.1.1 — Android app (APK)
 ========================================================
 
 WHAT IT DOES
@@ -62,5 +62,5 @@ GET  https://next.mymcd.eu/api/user/me
 GET  https://next.mymcd.eu/api/next-shifts/{id}?count=10
 
 Package: eu.mymcd.shifts
-Version: 1.1.0 (versionCode 2)
+Version: 1.1.1 (versionCode 3)
 Min SDK: 31   Target SDK: 36 (Android 16)

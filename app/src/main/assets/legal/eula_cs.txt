@@ -35,4 +35,4 @@ Tato licence platí do ukončení. Vaše práva zanikají automaticky při poru�
 EULA můžeme aktualizovat. Dalším používáním Aplikace souhlasíte s novými podmínkami.
 
 10. Kontakt
-Dotazy: založte issue na GitHub repozitáři projektu.
+Dotazy: https://github.com/dominik-kaspar-dev/MyMcD-shifts/issues

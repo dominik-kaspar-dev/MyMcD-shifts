@@ -30,4 +30,4 @@ You agree to indemnify the developer against claims arising from your misuse of 
 These terms are governed by the laws applicable where the developer resides, without regard to conflict-of-law rules, unless mandatory local consumer law provides otherwise.
 
 10. Contact
-Issues and questions: project GitHub repository.
+Issues and questions: https://github.com/dominik-kaspar-dev/MyMcD-shifts/issues

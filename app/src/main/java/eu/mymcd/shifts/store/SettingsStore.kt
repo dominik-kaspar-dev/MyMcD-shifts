@@ -79,13 +79,13 @@ class SettingsStore(context: Context) {
 
     companion object {
         /** Bump when the meaning of the legal bundle changes (forces re-accept). */
-        const val LEGAL_VERSION = 2
+        const val LEGAL_VERSION = 3
 
         /**
          * Bump (set to current time) whenever eula/terms/privacy text files change.
          * Accept is valid only if confirmedAt >= this value.
          */
-        const val LEGAL_DOCS_CHANGED_AT_MS: Long = 1_769_000_000_000L // 2026-01-21; update with docs edits
+        const val LEGAL_DOCS_CHANGED_AT_MS: Long = 1_790_200_000_000L // 2026-09-23; contact URLs added
 
         private const val KEY_REFRESH_MIN = "refresh_interval_min"
         private const val KEY_N_ADD = "n_add"

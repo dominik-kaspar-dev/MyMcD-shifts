@@ -3,7 +3,7 @@ MyMcD Shifts
 Effective: 23 September 2026
 
 1. Controller
-The developer of MyMcD Shifts ("we") processes data only as described here. Contact via the project GitHub repository.
+The developer of MyMcD Shifts ("we") processes data only as described here. Contact: https://github.com/dominik-kaspar-dev/MyMcD-shifts/issues
 
 2. Data we process
 - Account identifiers and encrypted credentials (e-mail, password, session cookies) stored locally on your device using Android Keystore.

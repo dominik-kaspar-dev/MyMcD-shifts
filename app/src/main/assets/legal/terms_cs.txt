@@ -30,4 +30,4 @@ Souhlasíte s odškodněním vývojáře při zneužití Aplikace nebo porušen�
 Řídí se právem platným v místě bydliště vývojáře, pokud spotřebitelské právo neurčí jinak.
 
 10. Kontakt
-GitHub repozitář projektu.
+https://github.com/dominik-kaspar-dev/MyMcD-shifts/issues

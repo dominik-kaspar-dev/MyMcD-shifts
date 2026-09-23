@@ -3,7 +3,7 @@ MyMcD Shifts
 Platné od: 23. září 2026
 
 1. Správce
-Vývojář aplikace MyMcD Shifts ("my") zpracovává data pouze tak, jak je popsáno níže. Kontakt přes GitHub repozitář projektu.
+Vývojář aplikace MyMcD Shifts ("my") zpracovává data pouze tak, jak je popsáno níže. Kontakt: https://github.com/dominik-kaspar-dev/MyMcD-shifts/issues
 
 2. Zpracovávaná data
 - Identifikátory účtu a šifrované přihlašovací údaje (e-mail, heslo, session cookies) uložené lokálně v Android Keystore.

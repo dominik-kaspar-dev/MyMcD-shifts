@@ -47,5 +47,5 @@ Repo copies for publishing: `docs/EULA.md`, `docs/TERMS.md`, `docs/PRIVACY_POLIC
 
 ## Package
 - `eu.mymcd.shifts`
-- versionName `1.1.0` / versionCode `2`
+- versionName `1.1.1` / versionCode `3`
 - minSdk 31 · targetSdk 36

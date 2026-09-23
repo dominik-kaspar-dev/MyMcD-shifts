@@ -35,4 +35,4 @@ This license is effective until terminated. Your rights under this license termi
 We may update this EULA. Continued use of the App after changes constitutes acceptance of the new terms.
 
 10. Contact
-Questions: open an issue on the project GitHub repository.
+Questions: https://github.com/dominik-kaspar-dev/MyMcD-shifts/issues
