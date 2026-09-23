@@ -1,0 +1,38 @@
+END USER LICENSE AGREEMENT (EULA)
+MyMcD Shifts
+Effective: 23 September 2026
+
+1. License grant
+Subject to your compliance with this EULA, the developer grants you a personal, non-exclusive, non-transferable, revocable license to install and use the MyMcD Shifts application ("App") on devices you own or control, solely for viewing your own shift schedule obtained from mymcd.eu / next.mymcd.eu.
+
+2. Restrictions
+You may not:
+- reverse engineer, decompile, or disassemble the App except to the extent such restriction is prohibited by law;
+- rent, lease, lend, sell, redistribute, or sublicense the App;
+- remove or alter any proprietary notices;
+- use the App to access accounts or data that you are not authorized to access;
+- use the App for any unlawful purpose.
+
+3. Your accounts
+You are responsible for the security of your mymcd.eu credentials. The App stores credentials only on your device using Android Keystore encryption. You are responsible for all activity that occurs through your account.
+
+4. No affiliation
+The App is an independent, unofficial utility. It is not affiliated with, endorsed by, or sponsored by McDonald's Corporation, McDonald's Czech Republic, or mymcd.eu operators. All trademarks belong to their respective owners.
+
+5. Third-party services
+The App communicates with mymcd.eu and next.mymcd.eu. Your use of those services is governed by their own terms and policies.
+
+6. No warranty
+THE APP IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE APP WILL BE ERROR-FREE, UNINTERRUPTED, OR THAT SHIFT DATA WILL BE ACCURATE OR COMPLETE.
+
+7. Limitation of liability
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE DEVELOPER SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF DATA, PROFITS, OR SCHEDULING DECISIONS MADE IN RELIANCE ON THE APP.
+
+8. Termination
+This license is effective until terminated. Your rights under this license terminate automatically if you breach any of its terms. Upon termination, you must cease all use of the App and delete all copies.
+
+9. Changes
+We may update this EULA. Continued use of the App after changes constitutes acceptance of the new terms.
+
+10. Contact
+Questions: open an issue on the project GitHub repository.

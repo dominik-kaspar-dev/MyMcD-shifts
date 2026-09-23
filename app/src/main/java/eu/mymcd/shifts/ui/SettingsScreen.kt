@@ -22,13 +22,19 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.Gavel
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.PersonAdd
+import androidx.compose.material.icons.filled.PrivacyTip
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,6 +42,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -62,6 +69,7 @@ fun SettingsScreen(vm: AppViewModel) {
     var showLogout by remember { mutableStateOf(false) }
     var pendingDeleteId by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
+    val settings = state.settings
 
     Scaffold(
         topBar = {
@@ -90,11 +98,7 @@ fun SettingsScreen(vm: AppViewModel) {
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp)
         ) {
-            Text(
-                text = stringResource(R.string.accounts),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
+            SectionTitle(stringResource(R.string.accounts))
             Spacer(Modifier.height(8.dp))
 
             state.accounts.forEach { acc ->
@@ -169,11 +173,7 @@ fun SettingsScreen(vm: AppViewModel) {
             HorizontalDivider()
             Spacer(Modifier.height(16.dp))
 
-            Text(
-                text = stringResource(R.string.widget_section),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
+            SectionTitle(stringResource(R.string.widget_section))
             Spacer(Modifier.height(8.dp))
             Button(
                 onClick = { pinWidget(context, vm) },
@@ -196,11 +196,7 @@ fun SettingsScreen(vm: AppViewModel) {
             HorizontalDivider()
             Spacer(Modifier.height(16.dp))
 
-            Text(
-                text = stringResource(R.string.language),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
+            SectionTitle(stringResource(R.string.language))
             Spacer(Modifier.height(8.dp))
 
             val options = listOf(
@@ -215,7 +211,10 @@ fun SettingsScreen(vm: AppViewModel) {
                             .fillMaxWidth()
                             .selectable(
                                 selected = state.language == value,
-                                onClick = { vm.setLanguage(value) },
+                                onClick = {
+                                    val act = context.findActivity()
+                                    vm.setLanguage(value, act)
+                                },
                                 role = Role.RadioButton
                             )
                             .padding(vertical = 8.dp),
@@ -223,7 +222,10 @@ fun SettingsScreen(vm: AppViewModel) {
                     ) {
                         RadioButton(
                             selected = state.language == value,
-                            onClick = { vm.setLanguage(value) }
+                            onClick = {
+                                val act = context.findActivity()
+                                vm.setLanguage(value, act)
+                            }
                         )
                         Text(
                             text = label,
@@ -243,17 +245,110 @@ fun SettingsScreen(vm: AppViewModel) {
             HorizontalDivider()
             Spacer(Modifier.height(16.dp))
 
+            // Refresh interval
+            SectionTitle(stringResource(R.string.refresh_interval))
+            Spacer(Modifier.height(4.dp))
             Text(
-                text = stringResource(R.string.notifications),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
+                text = stringResource(R.string.refresh_interval_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+            Spacer(Modifier.height(8.dp))
+            val intervals = listOf(15, 30, 60, 180, 360, 720)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                intervals.forEach { m ->
+                    FilterChip(
+                        selected = settings.refreshIntervalMin == m,
+                        onClick = { vm.setRefreshInterval(m) },
+                        label = { Text(intervalLabel(m)) }
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(20.dp))
+            HorizontalDivider()
+            Spacer(Modifier.height(16.dp))
+
+            // Notifications
+            SectionTitle(stringResource(R.string.notifications))
             Spacer(Modifier.height(4.dp))
             Text(
                 text = stringResource(R.string.notifications_hint),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+            Spacer(Modifier.height(8.dp))
+
+            ToggleRow(
+                title = stringResource(R.string.notify_on_add),
+                subtitle = stringResource(R.string.notify_on_add_hint),
+                checked = settings.notifyOnAdd,
+                onCheckedChange = vm::setNotifyOnAdd
+            )
+            ToggleRow(
+                title = stringResource(R.string.notify_on_change),
+                subtitle = stringResource(R.string.notify_on_change_hint),
+                checked = settings.notifyOnChange,
+                onCheckedChange = vm::setNotifyOnChange
+            )
+            ToggleRow(
+                title = stringResource(R.string.notify_on_remove),
+                subtitle = stringResource(R.string.notify_on_remove_hint),
+                checked = settings.notifyOnRemove,
+                onCheckedChange = vm::setNotifyOnRemove
+            )
+
+            Spacer(Modifier.height(12.dp))
+            HorizontalDivider()
+            Spacer(Modifier.height(12.dp))
+
+            Text(
+                text = stringResource(R.string.reminders_section),
+                style = MaterialTheme.typography.titleSmall
+            )
+            Spacer(Modifier.height(6.dp))
+
+            ToggleRow(
+                title = stringResource(R.string.remind_dayof_title),
+                subtitle = stringResource(R.string.remind_dayof_hint),
+                checked = settings.notifyDayOf,
+                onCheckedChange = vm::setNotifyDayOf
+            )
+            if (settings.notifyDayOf) {
+                HourPickerRow(
+                    label = stringResource(R.string.remind_dayof_time),
+                    selected = settings.dayOfHour,
+                    onSelect = vm::setDayOfHour
+                )
+            }
+
+            Spacer(Modifier.height(8.dp))
+            ToggleRow(
+                title = stringResource(R.string.remind_before_title),
+                subtitle = stringResource(R.string.remind_before_hint),
+                checked = settings.notifyDayBefore,
+                onCheckedChange = vm::setNotifyDayBefore
+            )
+            if (settings.notifyDayBefore) {
+                HourPickerRow(
+                    label = stringResource(R.string.remind_before_time),
+                    selected = settings.dayBeforeHour,
+                    onSelect = vm::setDayBeforeHour
+                )
+            }
+
+            Spacer(Modifier.height(20.dp))
+            HorizontalDivider()
+            Spacer(Modifier.height(16.dp))
+
+            SectionTitle(stringResource(R.string.legal_section))
+            Spacer(Modifier.height(8.dp))
+            LegalLink(stringResource(R.string.eula_title)) { vm.openLegal(LegalDoc.Eula) }
+            LegalLink(stringResource(R.string.terms_title)) { vm.openLegal(LegalDoc.Terms) }
+            LegalLink(stringResource(R.string.privacy_title)) { vm.openLegal(LegalDoc.Privacy) }
 
             Spacer(Modifier.height(20.dp))
             Button(
@@ -316,6 +411,112 @@ fun SettingsScreen(vm: AppViewModel) {
             }
         )
     }
+}
+
+@Composable
+private fun SectionTitle(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.titleMedium,
+        color = MaterialTheme.colorScheme.primary
+    )
+}
+
+@Composable
+private fun ToggleRow(
+    title: String,
+    subtitle: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text(title, style = MaterialTheme.typography.bodyLarge)
+            Text(
+                subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        Switch(checked = checked, onCheckedChange = onCheckedChange)
+    }
+}
+
+@Composable
+private fun HourPickerRow(
+    label: String,
+    selected: Int,
+    onSelect: (Int) -> Unit
+) {
+    val hours = listOf(6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 21, 22, 23)
+    Column(Modifier.padding(start = 8.dp)) {
+        Text(
+            label,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(Modifier.height(4.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            hours.take(7).forEach { h ->
+                FilterChip(
+                    selected = selected == h,
+                    onClick = { onSelect(h) },
+                    label = { Text("%02d:00".format(h)) }
+                )
+            }
+        }
+        Spacer(Modifier.height(4.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            hours.drop(7).forEach { h ->
+                FilterChip(
+                    selected = selected == h,
+                    onClick = { onSelect(h) },
+                    label = { Text("%02d:00".format(h)) }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun LegalLink(title: String, onClick: () -> Unit) {
+    OutlinedButton(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+    ) {
+        Icon(Icons.Default.Gavel, contentDescription = null, modifier = Modifier.width(18.dp))
+        Spacer(Modifier.width(8.dp))
+        Text(title)
+    }
+}
+
+private fun intervalLabel(min: Int): String = when {
+    min < 60 -> "${min}m"
+    min == 60 -> "1h"
+    min < 1440 -> "${min / 60}h"
+    else -> "24h"
+}
+
+private fun Context.findActivity(): android.app.Activity? {
+    var ctx: android.content.Context? = this
+    while (ctx is android.content.ContextWrapper) {
+        if (ctx is android.app.Activity) return ctx
+        ctx = ctx.baseContext
+    }
+    return null
 }
 
 private fun pinWidget(context: Context, vm: AppViewModel) {

@@ -1,0 +1,41 @@
+PRIVACY POLICY
+MyMcD Shifts
+Effective: 23 September 2026
+
+1. Controller
+The developer of MyMcD Shifts ("we") processes data only as described here. Contact via the project GitHub repository.
+
+2. Data we process
+- Account identifiers and encrypted credentials (e-mail, password, session cookies) stored locally on your device using Android Keystore.
+- Shift schedule data fetched from mymcd.eu / next.mymcd.eu and cached encrypted on your device.
+- App settings (language, refresh interval, notification preferences) stored locally.
+- Notification permission status as required by Android.
+
+We do NOT collect analytics, advertising IDs, location, contacts, or files. The App does not include third-party analytics or ad SDKs.
+
+3. How data is used
+- To log in to your schedule account and display your shifts.
+- To refresh data in the background and show the home-screen widget.
+- To send local notifications you enable (plan changes, reminders).
+- Credentials never leave your device except to authenticate with mymcd.eu / next.mymcd.eu over HTTPS.
+
+4. Sharing
+We do not sell or share personal data. Data is transmitted only to the official schedule endpoints over TLS, and as required by law.
+
+5. Retention
+Data stays on your device until you log out, remove the account, or uninstall the App. Clearing app data removes all stored credentials and cache.
+
+6. Security
+Credentials and shift cache are encrypted with a hardware-backed Android Keystore AES-256-GCM key. No remote server operated by us stores your password.
+
+7. Your rights
+You may uninstall the App at any time to remove local data. Depending on your jurisdiction, you may have rights to access, export, or delete data held by mymcd.eu — contact that service for such requests.
+
+8. Children
+The App is intended for adults in employment contexts and is not directed at children.
+
+9. Changes
+We may update this policy. Material changes will be reflected by the effective date above.
+
+10. Third-party links/services
+mymcd.eu and next.mymcd.eu operate under their own privacy policies.

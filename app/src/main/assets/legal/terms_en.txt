@@ -1,0 +1,33 @@
+TERMS OF SERVICE
+MyMcD Shifts
+Effective: 23 September 2026
+
+1. Description of the service
+MyMcD Shifts is a mobile application that displays shift schedule information retrieved from your own mymcd.eu / next.mymcd.eu account. The App is optional software and is not an official McDonald's product.
+
+2. Eligibility and accounts
+You must have a valid account with the upstream schedule service and be authorized to view the data you load into the App. You must keep credentials confidential.
+
+3. Acceptable use
+You agree not to misuse the App, including attempting to disrupt service, scrape other users' data, or violate applicable law.
+
+4. Availability
+The App may be updated, suspended, or discontinued at any time. Scheduled data depends on the availability and accuracy of third-party services outside our control.
+
+5. User content and schedule data
+Shift data shown in the App belongs to you and/or your employer according to the upstream service's rules. The App does not claim ownership of your schedule.
+
+6. Disclaimers
+Use of the App is at your own risk. Do not rely solely on the App for time-critical attendance decisions without verifying with the official schedule source.
+
+7. Limitation of liability
+To the fullest extent permitted by law, the developer is not liable for damages arising from use or inability to use the App or from incorrect/missing schedule data.
+
+8. Indemnity
+You agree to indemnify the developer against claims arising from your misuse of the App or violation of these terms.
+
+9. Governing law
+These terms are governed by the laws applicable where the developer resides, without regard to conflict-of-law rules, unless mandatory local consumer law provides otherwise.
+
+10. Contact
+Issues and questions: project GitHub repository.

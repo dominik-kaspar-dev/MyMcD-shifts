@@ -1,0 +1,38 @@
+UŽIVATELSKÁ LICENCE (EULA)
+MyMcD Shifts
+Platné od: 23. září 2026
+
+1. Licence
+Ve splnění podmínek této licence vám vývojář uděluje osobní, nevýhradní, nepřevoditelný a odvolatelný oprávnění k instalaci a používání aplikace MyMcD Shifts ("Aplikace") na zařízeních, která vlastníte nebo ovládáte, výhradně pro zobrazení vašich vlastních směn z mymcd.eu / next.mymcd.eu.
+
+2. Omezení
+Nesmíte:
+- provádět zpětné inženýrství, dekompilaci ani disassemblaci, pokud to zákon výslovně nezakazuje;
+- pronajímat, půjčovat, poskytovat ani prodávat Aplikaci;
+- odstraňovat či měnit ochranné známky a oznámení;
+- používat Aplikaci k přístupu k údajům, k nimž nemáte oprávnění;
+- používat Aplikaci k nezákonné činnosti.
+
+3. Vaše účty
+Za zabezpečení přihlašovacích údajů k mymcd.eu odpovídáte vy. Aplikace ukládá údaje pouze na vašem zařízení pomocí šifrování Android Keystore. Za aktivitu provedenou prostřednictvím vašeho účtu odpovádáte vy.
+
+4. Neoficiální charakter
+Aplikace je nezávislý, neoficiální pomocný nástroj. Není přidružena ke společnosti McDonald's ani k provozovatelům mymcd.eu a není jimi schvalována. Všechny ochranné známky náleží jejich vlastníkům.
+
+5. Služby třetích stran
+Aplikace komunikuje s mymcd.eu a next.mymcd.eu. Podmínky těchto služeb se řídí jejich vlastními pravidly.
+
+6. Záruka
+APLIKACE JE POSKYTOVÁNA "TAK, JAK JE", BEZ JAKÉKOLI ZÁRUKY, VÝSLOVNÉ NEBO MLČENLIVÉ, VČETNĚ ZÁRUK OBCHODNÉ ZPŮSOBILOSTI, VHODNOSTI PRO URČITÝ ÚČEL A NEPORUŠENÍ PRÁV.
+
+7. Omezení odpovědnosti
+V ROZSAHU POVOLENÉM ZÁKONEM VÝVOJÁŘ NENES ODPOVĚDNOST ZA NEPŘÍMÉ, NÁHODNÉ ANI NÁSLEDNÉ ŠKODY ANI ZA ZTRÁTU ÚDAJŮ, ZISKŮ ČI ROZHODNUTÍ O ROZVRHU UČINĚNÁ NA ZÁKLADĚ APLIKACE.
+
+8. Ukončení
+Tato licence platí do ukončení. Vaše práva zanikají automaticky při porušení podmínek. Po ukončení přestaňte Aplikaci používat a smažte její kopie.
+
+9. Změny
+EULA můžeme aktualizovat. Dalším používáním Aplikace souhlasíte s novými podmínkami.
+
+10. Kontakt
+Dotazy: založte issue na GitHub repozitáři projektu.

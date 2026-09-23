@@ -20,7 +20,7 @@
     <string name="remove_account_message">Účet, relace a uložené směny budou z tohoto zařízení smazány.</string>
     <string name="language">Jazyk</string>
     <string name="lang_auto">Automaticky (systémový region)</string>
-    <string name="lang_auto_hint">Automaticky použije region systému; jinak angličtina.</string>
+    <string name="lang_auto_hint">Automaticky použije region systému; jinak angličtina. Změna se projeví ihned.</string>
     <string name="logout">Odhlásit</string>
     <string name="logout_title">Odhlásit se?</string>
     <string name="logout_message">Aktivní účet bude z tohoto zařízení odstraněn.</string>
@@ -29,7 +29,7 @@
     <string name="showing_count">Zobrazeno směn: %1$d</string>
     <string name="last_updated">Aktualizováno: %1$s</string>
     <string name="pull_to_retry">Obnovte nebo zkontrolujte připojení.</string>
-    <string name="refresh_note">Widget se obnovuje přibližně každých 30 minut. Manuální obnovení tlačítkem ↻ na widgetu.</string>
+    <string name="refresh_note">Aplikace a widget se obnovují podle zvoleného intervalu. Manuální obnovení tlačítkem ↻ na widgetu.</string>
     <string name="error_empty_fields">Zadejte e-mail a heslo.</string>
     <string name="error_auth">Přihlášení se nezdařilo. Zkontrolujte e-mail a heslo.</string>
     <string name="error_network">Chyba sítě. Zkontrolujte připojení.</string>
@@ -42,10 +42,12 @@
     <string name="pin_requested">Vyberte widget na ploše a umístěte jej.</string>
     <string name="pin_unsupported">Pin není podporován — dlouhé klepnutí na plochu → Widgety → MyMcD Směny.</string>
     <string name="pin_failed">Nepodařilo se otevřít výběr widgetu. Zkuste plochu → Widgety.</string>
-    <string name="notifications">Upozornění na změny směn</string>
-    <string name="notifications_hint">Dostanete notifikaci, když se plán směn změní (přidání/odebrání/časy).</string>
+    <string name="notifications">Oznámení</string>
+    <string name="notifications_hint">Upozornění při změně plánu a před nadcházejícími směnami.</string>
     <string name="notif_channel_name">Změny směn</string>
     <string name="notif_channel_desc">Upozornění při aktualizaci plánu směn</string>
+    <string name="notif_reminder_channel_name">Upozornění na směny</string>
+    <string name="notif_reminder_channel_desc">Připomínka den před směnou a v den směny</string>
     <string name="notif_title">Změna plánu směn · %1$s</string>
     <string name="notif_added">+%1$d nové</string>
     <string name="notif_removed">−%1$d odebrány</string>
@@ -56,4 +58,36 @@
     <string name="show_previous">Zobrazit předchozí</string>
     <string name="show_current">Zobrazit aktuální</string>
     <string name="previous_empty">Zatím není uložen žádný předchozí plán</string>
+
+    <string name="refresh_interval">Interval obnovení</string>
+    <string name="refresh_interval_hint">Jak často aplikace a widget načtou směny.</string>
+
+    <string name="notify_on_add">Přidána nová směna</string>
+    <string name="notify_on_add_hint">Když se v plánu objeví budoucí směna</string>
+    <string name="notify_on_change">Směna změněna</string>
+    <string name="notify_on_change_hint">Když se změní časy nadcházející směny</string>
+    <string name="notify_on_remove">Odebrána budoucí směna</string>
+    <string name="notify_on_remove_hint">Jen pokud směna ještě nezačala — ne když prostě skončí</string>
+
+    <string name="reminders_section">Připomínky směn</string>
+    <string name="remind_dayof_title">V den směny</string>
+    <string name="remind_dayof_hint">Připomínka v den směny před začátkem</string>
+    <string name="remind_dayof_time">Čas v den směny</string>
+    <string name="remind_before_title">Den před směnou</string>
+    <string name="remind_before_hint">Večerní připomínka den před směnou</string>
+    <string name="remind_before_time">Čas den před</string>
+    <string name="remind_body">%1$s  %2$s – %3$s (%4$s)</string>
+
+    <string name="hours_next7">Příštích 7 dní: %1$s</string>
+    <string name="hours_all">Všechny zobrazené: %1$s</string>
+    <string name="add_to_calendar">Přidat do kalendáře</string>
+    <string name="share_shift">Sdílet směnu</string>
+    <string name="calendar_failed">Nepodařilo se otevřít kalendář</string>
+
+    <string name="legal_section">Právní informace</string>
+    <string name="eula_title">Uživatelská licence (EULA)</string>
+    <string name="terms_title">Podmínky používání</string>
+    <string name="privacy_title">Zásady ochrany soukromí</string>
+    <string name="legal_effective">Platné od: 23. září 2026</string>
+    <string name="legal_disclaimer">Neoficiální pomocná aplikace. McDonald\'s a mymcd.eu jsou ochranné známky příslušných vlastníků.</string>
 </resources>

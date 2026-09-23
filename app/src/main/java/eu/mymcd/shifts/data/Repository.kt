@@ -105,6 +105,11 @@ class Repository private constructor(context: Context) {
                 )
             }
         }
+
+        try {
+            eu.mymcd.shifts.notify.ReminderScheduler.rescheduleAll(appContext)
+        } catch (_: Throwable) {
+        }
     }
 
     fun loginToAccount(email: String, password: String, accountId: String? = null): RefreshResult {

@@ -1,6 +1,8 @@
 package eu.mymcd.shifts.ui
 
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,7 +12,9 @@ import androidx.lifecycle.viewModelScope
 import eu.mymcd.shifts.data.RefreshResult
 import eu.mymcd.shifts.data.Repository
 import eu.mymcd.shifts.network.Shift
+import eu.mymcd.shifts.notify.ReminderScheduler
 import eu.mymcd.shifts.store.AccountMeta
+import eu.mymcd.shifts.store.SettingsStore
 import eu.mymcd.shifts.util.LocaleUtil
 import eu.mymcd.shifts.widget.ShiftWidgetReceiver
 import eu.mymcd.shifts.work.RefreshWorker
@@ -18,8 +22,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-enum class Screen { Login, Shifts, Settings }
+enum class Screen { Login, Shifts, Settings, Legal }
 enum class LoginMode { SignIn, AddAccount }
+enum class LegalDoc { Eula, Terms, Privacy }
+
+data class SettingsUi(
+    val refreshIntervalMin: Int = 30,
+    val notifyOnAdd: Boolean = true,
+    val notifyOnChange: Boolean = true,
+    val notifyOnRemove: Boolean = true,
+    val notifyDayOf: Boolean = true,
+    val dayOfHour: Int = 8,
+    val notifyDayBefore: Boolean = true,
+    val dayBeforeHour: Int = 22
+)
 
 data class UiState(
     val screen: Screen = Screen.Login,
@@ -35,13 +51,17 @@ data class UiState(
     val lastUpdateMs: Long = 0L,
     val accounts: List<AccountMeta> = emptyList(),
     val activeAccountId: String = "",
-    val pinWidgetStatus: String? = null
+    val pinWidgetStatus: String? = null,
+    val settings: SettingsUi = SettingsUi(),
+    val legalDoc: LegalDoc = LegalDoc.Eula,
+    val languageRevision: Int = 0
 )
 
 class AppViewModel(context: Context) : ViewModel() {
 
     private val appContext = context.applicationContext
     private val repo = Repository.get(appContext)
+    private val settingsStore = SettingsStore(appContext)
 
     var state by mutableStateOf(UiState())
         private set
@@ -68,12 +88,25 @@ class AppViewModel(context: Context) : ViewModel() {
             activeAccountId = active,
             screen = when {
                 state.screen == Screen.Settings -> Screen.Settings
+                state.screen == Screen.Legal -> Screen.Legal
                 configured -> Screen.Shifts
                 else -> Screen.Login
             },
-            loginMode = LoginMode.SignIn
+            loginMode = LoginMode.SignIn,
+            settings = loadSettings()
         )
     }
+
+    private fun loadSettings(): SettingsUi = SettingsUi(
+        refreshIntervalMin = settingsStore.refreshIntervalMin,
+        notifyOnAdd = settingsStore.notifyOnAdd,
+        notifyOnChange = settingsStore.notifyOnChange,
+        notifyOnRemove = settingsStore.notifyOnRemove,
+        notifyDayOf = settingsStore.notifyDayOf,
+        dayOfHour = settingsStore.dayOfHour,
+        notifyDayBefore = settingsStore.notifyDayBefore,
+        dayBeforeHour = settingsStore.dayBeforeHour
+    )
 
     fun onEmailChange(v: String) {
         state = state.copy(email = v, error = null)
@@ -158,6 +191,9 @@ class AppViewModel(context: Context) : ViewModel() {
                         accounts = repo.accounts()
                     )
                     kickWidgetRender()
+                    viewModelScope.launch(Dispatchers.IO) {
+                        ReminderScheduler.rescheduleAll(appContext)
+                    }
                 }
                 is RefreshResult.Error -> {
                     val active = repo.activeAccountId()
@@ -190,9 +226,77 @@ class AppViewModel(context: Context) : ViewModel() {
         openShifts()
     }
 
-    fun setLanguage(lang: String) {
+    /**
+     * Saves language immediately and requests an Activity recreate so
+     * string resources update without a full app restart.
+     */
+    fun setLanguage(lang: String, activity: Activity? = null) {
+        if (repo.store.language == lang) return
         repo.store.language = lang
-        state = state.copy(language = lang)
+        state = state.copy(language = lang, languageRevision = state.languageRevision + 1)
+        val act = activity ?: findActivity(appContext)
+        act?.let {
+            it.runOnUiThread { it.recreate() }
+        }
+    }
+
+    fun setRefreshInterval(minutes: Int) {
+        settingsStore.refreshIntervalMin = minutes
+        state = state.copy(settings = loadSettings())
+        RefreshWorker.enqueuePeriodic(appContext)
+    }
+
+    fun setNotifyOnAdd(v: Boolean) {
+        settingsStore.notifyOnAdd = v
+        state = state.copy(settings = loadSettings())
+    }
+
+    fun setNotifyOnChange(v: Boolean) {
+        settingsStore.notifyOnChange = v
+        state = state.copy(settings = loadSettings())
+    }
+
+    fun setNotifyOnRemove(v: Boolean) {
+        settingsStore.notifyOnRemove = v
+        state = state.copy(settings = loadSettings())
+    }
+
+    fun setNotifyDayOf(v: Boolean) {
+        settingsStore.notifyDayOf = v
+        state = state.copy(settings = loadSettings())
+        rescheduleReminders()
+    }
+
+    fun setDayOfHour(h: Int) {
+        settingsStore.dayOfHour = h
+        state = state.copy(settings = loadSettings())
+        rescheduleReminders()
+    }
+
+    fun setNotifyDayBefore(v: Boolean) {
+        settingsStore.notifyDayBefore = v
+        state = state.copy(settings = loadSettings())
+        rescheduleReminders()
+    }
+
+    fun setDayBeforeHour(h: Int) {
+        settingsStore.dayBeforeHour = h
+        state = state.copy(settings = loadSettings())
+        rescheduleReminders()
+    }
+
+    fun openLegal(doc: LegalDoc) {
+        state = state.copy(screen = Screen.Legal, legalDoc = doc)
+    }
+
+    fun backFromLegal() {
+        state = state.copy(screen = Screen.Settings)
+    }
+
+    private fun rescheduleReminders() {
+        viewModelScope.launch(Dispatchers.IO) {
+            ReminderScheduler.rescheduleAll(appContext)
+        }
     }
 
     fun switchAccount(id: String) {
@@ -220,7 +324,7 @@ class AppViewModel(context: Context) : ViewModel() {
             withContext(Dispatchers.IO) { repo.logoutActive() }
             reloadFromStore()
             if (!repo.store.anyAccountConfigured()) {
-                state = UiState(language = repo.store.language, screen = Screen.Login)
+                state = UiState(language = repo.store.language, screen = Screen.Login, settings = loadSettings())
             } else {
                 state = state.copy(screen = Screen.Shifts)
                 refresh()
@@ -231,7 +335,6 @@ class AppViewModel(context: Context) : ViewModel() {
 
     fun showPreviousPlan() {
         state = state.copy(screen = Screen.Shifts)
-        // previous is already in state; UI can toggle
     }
 
     fun clearError() {
@@ -249,6 +352,15 @@ class AppViewModel(context: Context) : ViewModel() {
 
     private fun kickWidgetRender() {
         ShiftWidgetReceiver.requestRender(appContext)
+    }
+
+    private fun findActivity(context: Context): Activity? {
+        var ctx: Context? = context
+        while (ctx is ContextWrapper) {
+            if (ctx is Activity) return ctx
+            ctx = ctx.baseContext
+        }
+        return null
     }
 
     class Factory(private val context: Context) : ViewModelProvider.Factory {

@@ -2,6 +2,7 @@ package eu.mymcd.shifts.work
 
 import android.content.Context
 import android.util.Log
+import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -10,6 +11,8 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import eu.mymcd.shifts.data.Repository
 import eu.mymcd.shifts.notify.Notifier
+import eu.mymcd.shifts.notify.ReminderScheduler
+import eu.mymcd.shifts.store.SettingsStore
 import eu.mymcd.shifts.widget.ShiftWidgetReceiver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -30,9 +33,10 @@ class RefreshWorker(
                 return@withContext Result.success()
             }
 
-            // Re-login is handled inside McDClient.refreshAll when /api/user/me is 401.
+            // Re-login handled inside McDClient.refreshAll when session is invalid.
             repo.refreshAllAccounts(notify = true)
             ShiftWidgetReceiver.updateWidgets(applicationContext)
+            ReminderScheduler.rescheduleAll(applicationContext)
             Result.success()
         } catch (t: Throwable) {
             Log.e(TAG, "refresh failed", t)
@@ -58,14 +62,23 @@ class RefreshWorker(
             )
         }
 
-        /** Used from widget onUpdate — keep existing periodic work, don't thrash. */
-        fun enqueuePeriodicSafe(context: Context) {
-            val request = PeriodicWorkRequestBuilder<RefreshWorker>(30, TimeUnit.MINUTES).build()
+        /** (Re)schedule periodic refresh using the user-configured interval. */
+        fun enqueuePeriodic(context: Context) {
+            val minutes = SettingsStore(context).refreshIntervalMin.toLong().coerceAtLeast(5L)
+            val request = PeriodicWorkRequestBuilder<RefreshWorker>(minutes, TimeUnit.MINUTES)
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(androidx.work.NetworkType.CONNECTED)
+                        .build()
+                )
+                .build()
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 UNIQUE_NAME,
-                ExistingPeriodicWorkPolicy.KEEP,
+                ExistingPeriodicWorkPolicy.UPDATE,
                 request
             )
         }
+
+        fun enqueuePeriodicSafe(context: Context) = enqueuePeriodic(context)
     }
 }

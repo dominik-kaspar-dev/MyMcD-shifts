@@ -10,9 +10,14 @@ Android 16 (API 36) app that logs into [next.mymcd.eu](https://next.mymcd.eu), s
 - Widget ↻ manual refresh + pin-to-home-screen button
 - Auto re-login when the session expires
 - Shift-change notifications (added / removed / changed times)
+- Optional reminders: day-of (default 08:00) and day-before (default 22:00)
+- Configurable refresh interval (5–120 min) and notification toggles
 - Previous plan history + “Show previous” toggle
+- Share shift / add to calendar
+- Language switch applies instantly (activity recreate, no restart)
 - Language: Auto (system locale) / Čeština / English
-- Background refresh every ~30 minutes (WorkManager)
+- EULA / Terms / Privacy (en + cs) in Settings → Legal
+- Background refresh on WorkManager (user-configured interval)
 
 ## Build
 ```bash
@@ -36,7 +41,11 @@ Copy the APK to the phone → open → allow unknown sources → install.
 | GET | `https://next.mymcd.eu/api/user/me` |
 | GET | `https://next.mymcd.eu/api/next-shifts/{userId}?count=10` |
 
+## Legal
+Bundled full texts: `app/src/main/assets/legal/` (en + cs).
+Repo copies for publishing: `docs/EULA.md`, `docs/TERMS.md`, `docs/PRIVACY_POLICY.md`.
+
 ## Package
 - `eu.mymcd.shifts`
-- versionName `1.0.0` / versionCode `1`
+- versionName `1.1.0` / versionCode `2`
 - minSdk 31 · targetSdk 36

@@ -1,5 +1,5 @@
 ========================================================
- MyMcD Shifts 1.0.0 — Android app (APK)
+ MyMcD Shifts 1.1.0 — Android app (APK)
 ========================================================
 
 WHAT IT DOES
@@ -8,8 +8,12 @@ WHAT IT DOES
   (stored encrypted on-device with Android Keystore)
 - Shows your next 10 shifts in the app
 - Home-screen widget shows the next 3 shifts
-- Widget/app auto-refresh about every 30 minutes
-- Language: Auto (system region) / Čeština / English
+- Auto-refresh on your chosen interval (5–120 min)
+- Notifications: shift changes + day-of / day-before
+  reminders (defaults 08:00 and 22:00; configurable)
+- Share shift / add to calendar
+- Language: Auto / Čeština / English — changes instantly
+- EULA / Terms / Privacy in Settings → Legal
 
 INSTALL (sideload)
 ------------------
@@ -28,6 +32,7 @@ REQUIREMENTS
 ------------
 - Android 12.0+ (API 31) — works on Android 16
 - Internet connection
+- Allow notifications for shift changes/reminders
 - For timely widget updates: allow battery optimization
   exemption for the app if your phone is aggressive
   (Settings → Apps → MyMcD Shifts → Battery → Unrestricted)
@@ -51,11 +56,11 @@ Source: MyMcD-shifts-source.zip
 
 API endpoints used
 ------------------
-POST https://next.mymcd.eu/user/login-check/
+POST https://mymcd.eu/user/login-check/
      (_username, _password, redir)
 GET  https://next.mymcd.eu/api/user/me
 GET  https://next.mymcd.eu/api/next-shifts/{id}?count=10
 
 Package: eu.mymcd.shifts
-Version: 1.0.0 (versionCode 1)
+Version: 1.1.0 (versionCode 2)
 Min SDK: 31   Target SDK: 36 (Android 16)

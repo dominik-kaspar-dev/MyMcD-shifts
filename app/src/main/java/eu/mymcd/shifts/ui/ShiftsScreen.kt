@@ -1,5 +1,6 @@
 package eu.mymcd.shifts.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,10 +15,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -37,12 +39,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import eu.mymcd.shifts.R
 import eu.mymcd.shifts.network.Shift
 import eu.mymcd.shifts.util.LocaleUtil
+import eu.mymcd.shifts.util.ShareUtil
+import eu.mymcd.shifts.util.TimeUtil
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -58,6 +63,7 @@ fun ShiftsScreen(vm: AppViewModel) {
     }
     var showPrevious by remember { mutableStateOf(false) }
     val displayed = if (showPrevious) state.previousShifts else state.shifts
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -118,9 +124,10 @@ fun ShiftsScreen(vm: AppViewModel) {
                         Icon(Icons.Default.History, contentDescription = null)
                     }
                 )
-                if (state.previousShifts.isEmpty() && !showPrevious) {
-                    // chip still visible for discoverability
-                }
+            }
+
+            if (!showPrevious && displayed.isNotEmpty()) {
+                HoursSummaryCard(displayed, locale)
             }
 
             if (showPrevious && state.previousShifts.isEmpty()) {
@@ -186,7 +193,21 @@ fun ShiftsScreen(vm: AppViewModel) {
                     modifier = Modifier.fillMaxSize()
                 ) {
                     items(displayed, key = { if (showPrevious) "p${it.id}" else "c${it.id}" }) { shift ->
-                        ShiftCard(shift, locale)
+                        ShiftCard(
+                            shift = shift,
+                            locale = locale,
+                            onShare = { ShareUtil.shareShift(context, shift) },
+                            onCalendar = {
+                                val ok = ShareUtil.addToCalendar(context, shift)
+                                if (!ok) {
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.calendar_failed),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        )
                     }
                     item {
                         Text(
@@ -203,7 +224,54 @@ fun ShiftsScreen(vm: AppViewModel) {
 }
 
 @Composable
-private fun ShiftCard(shift: Shift, locale: Locale) {
+private fun HoursSummaryCard(shifts: List<Shift>, locale: Locale) {
+    val now = remember(shifts) { LocalDateTime.now() }
+    val next7 = remember(shifts, now) {
+        shifts.filter {
+            val s = TimeUtil.shiftStart(it) ?: return@filter false
+            !s.isBefore(now) && s.isBefore(now.plusDays(7))
+        }
+    }
+    val allH = TimeUtil.formatHours(TimeUtil.totalHours(shifts), locale)
+    val weekH = TimeUtil.formatHours(TimeUtil.totalHours(next7), locale)
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
+                Text(
+                    stringResource(R.string.hours_next7, weekH),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    stringResource(R.string.hours_all, allH),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ShiftCard(
+    shift: Shift,
+    locale: Locale,
+    onShare: () -> Unit,
+    onCalendar: () -> Unit
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -236,28 +304,30 @@ private fun ShiftCard(shift: Shift, locale: Locale) {
                     )
                 }
             }
-            Spacer(Modifier.width(12.dp))
+            Spacer(Modifier.width(8.dp))
             DurationBadge(shift, locale)
+            IconButton(onClick = onCalendar) {
+                Icon(
+                    Icons.Default.CalendarMonth,
+                    contentDescription = stringResource(R.string.add_to_calendar),
+                    tint = MaterialTheme.colorScheme.secondary
+                )
+            }
+            IconButton(onClick = onShare) {
+                Icon(
+                    Icons.Default.Share,
+                    contentDescription = stringResource(R.string.share_shift),
+                    tint = MaterialTheme.colorScheme.secondary
+                )
+            }
         }
     }
 }
 
 @Composable
 private fun DurationBadge(shift: Shift, locale: Locale) {
-    val hours = try {
-        val from = LocalDateTime.parse(shift.from, PARSER)
-        val to = LocalDateTime.parse(shift.to, PARSER)
-        val minutes = java.time.Duration.between(from, to).toMinutes()
-        minutes / 60f
-    } catch (_: Exception) {
-        null
-    }
-    if (hours == null) return
-    val text = if (hours == hours.toInt().toFloat()) {
-        if (locale.language == "cs") "${hours.toInt()} h" else "${hours.toInt()} h"
-    } else {
-        String.format(locale, "%.1f h", hours)
-    }
+    val hours = TimeUtil.hoursBetween(shift) ?: return
+    val text = TimeUtil.formatHours(hours, locale)
     Text(
         text = text,
         style = MaterialTheme.typography.labelLarge,

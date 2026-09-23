@@ -1,0 +1,41 @@
+ZÁSADY OCHRANY SOUKROMÍ
+MyMcD Shifts
+Platné od: 23. září 2026
+
+1. Správce
+Vývojář aplikace MyMcD Shifts ("my") zpracovává data pouze tak, jak je popsáno níže. Kontakt přes GitHub repozitář projektu.
+
+2. Zpracovávaná data
+- Identifikátory účtu a šifrované přihlašovací údaje (e-mail, heslo, session cookies) uložené lokálně v Android Keystore.
+- Data o směnách načtená z mymcd.eu / next.mymcd.eu a uložená šifrovaně v zařízení.
+- Nastavení aplikace (jazyk, interval obnovení, preference oznámení).
+- Stav oprávnění k oznámením vyžadovaný systémem Android.
+
+Neshromažďujeme analytiku, reklamní ID, polohu, kontakty ani soubory. Aplikace neobsahuje analytické ani reklamní SDK.
+
+3. Jak data používáme
+- Přihlášení k účtu rozvrhu a zobrazení směn.
+- Pozadí obnovení a widget na ploše.
+- Lokální oznámení, která zapnete (změny plánu, připomínky).
+- Přihlašovací údaje neopouštějí zařízení kromě HTTPS přihlášení k mymcd.eu / next.mymcd.eu.
+
+4. Sdílení
+Neprodáváme ani nesdílíme osobní data. Přenosy směřují jen na oficiální endpointy přes TLS a podle zákona.
+
+5. Uchování
+Data zůstávají v zařízení, dokud se neodhlásíte, neodstraníte účet nebo aplikaci neodinstalujete. Vymazání dat aplikace smaže vše.
+
+6. Zabezpečení
+Přihlašovací údaje a cache směn jsou šifrovány klíčem Android Keystore AES-256-GCM. Vaše heslo neukládáme na našem serveru.
+
+7. Vaše práva
+Odinstalací odstraníte lokální data. Práva k datům u mymcd.eu uplatňujete u této služby.
+
+8. Děti
+Aplikace je určena dospělým v pracovním kontextu.
+
+9. Změny
+Zásady můžeme aktualizovat; platí datum výše.
+
+10. Třetí strany
+mymcd.eu a next.mymcd.eu se řídí vlastními zásadami ochrany soukromí.

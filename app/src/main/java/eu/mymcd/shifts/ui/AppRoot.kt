@@ -23,6 +23,7 @@ fun AppRoot(vm: AppViewModel) {
             Screen.Login -> LoginScreen(vm)
             Screen.Shifts -> ShiftsScreen(vm)
             Screen.Settings -> SettingsScreen(vm)
+            Screen.Legal -> LegalScreen(vm)
         }
     }
 }

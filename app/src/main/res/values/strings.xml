@@ -20,7 +20,7 @@
     <string name="remove_account_message">This account, its session and stored shifts will be deleted from this device.</string>
     <string name="language">Language</string>
     <string name="lang_auto">Auto (system region)</string>
-    <string name="lang_auto_hint">Auto uses your system locale/region; English if unknown.</string>
+    <string name="lang_auto_hint">Auto uses your system locale/region; English if unknown. Changes apply immediately.</string>
     <string name="logout">Log out</string>
     <string name="logout_title">Log out?</string>
     <string name="logout_message">The active account will be removed from this device.</string>
@@ -29,7 +29,7 @@
     <string name="showing_count">Showing %1$d shifts</string>
     <string name="last_updated">Updated: %1$s</string>
     <string name="pull_to_retry">Pull refresh or check connection.</string>
-    <string name="refresh_note">Widget refreshes about every 30 minutes. Use the ↻ button on the widget for a manual reload.</string>
+    <string name="refresh_note">Widget and data refresh on the interval you choose. Use the ↻ button on the widget for a manual reload.</string>
     <string name="error_empty_fields">Please enter e-mail and password.</string>
     <string name="error_auth">Login failed. Check your e-mail and password.</string>
     <string name="error_network">Network error. Check your connection.</string>
@@ -42,10 +42,12 @@
     <string name="pin_requested">Choose the widget on the home screen to place it.</string>
     <string name="pin_unsupported">Pin not supported — long-press home screen → Widgets → MyMcD Shifts.</string>
     <string name="pin_failed">Could not open widget picker. Long-press home screen → Widgets instead.</string>
-    <string name="notifications">Shift change alerts</string>
-    <string name="notifications_hint">You get a notification when your shift plan changes (add/remove/times).</string>
+    <string name="notifications">Notifications</string>
+    <string name="notifications_hint">Get notified when your plan changes and before upcoming shifts.</string>
     <string name="notif_channel_name">Shift changes</string>
     <string name="notif_channel_desc">Alerts when the shift plan is updated</string>
+    <string name="notif_reminder_channel_name">Shift reminders</string>
+    <string name="notif_reminder_channel_desc">Reminders the day before and on the day of a shift</string>
     <string name="notif_title">Shift plan changed · %1$s</string>
     <string name="notif_added">+%1$d new</string>
     <string name="notif_removed">−%1$d removed</string>
@@ -56,4 +58,36 @@
     <string name="show_previous">Show previous</string>
     <string name="show_current">Show current</string>
     <string name="previous_empty">No previous plan stored yet</string>
+
+    <string name="refresh_interval">Refresh interval</string>
+    <string name="refresh_interval_hint">How often the app and widget reload your shifts.</string>
+
+    <string name="notify_on_add">New shift added</string>
+    <string name="notify_on_add_hint">When a future shift appears in your plan</string>
+    <string name="notify_on_change">Shift changed</string>
+    <string name="notify_on_change_hint">When times or details of an upcoming shift change</string>
+    <string name="notify_on_remove">Upcoming shift removed</string>
+    <string name="notify_on_remove_hint">Only if the shift had not started yet — not when it simply ends</string>
+
+    <string name="reminders_section">Shift reminders</string>
+    <string name="remind_dayof_title">On the day of the shift</string>
+    <string name="remind_dayof_hint">Reminder on shift day before it starts</string>
+    <string name="remind_dayof_time">Day-of time</string>
+    <string name="remind_before_title">Day before the shift</string>
+    <string name="remind_before_hint">Evening reminder the day before your shift</string>
+    <string name="remind_before_time">Day-before time</string>
+    <string name="remind_body">%1$s  %2$s – %3$s (%4$s)</string>
+
+    <string name="hours_next7">Next 7 days: %1$s</string>
+    <string name="hours_all">All listed shifts: %1$s</string>
+    <string name="add_to_calendar">Add to calendar</string>
+    <string name="share_shift">Share shift</string>
+    <string name="calendar_failed">Could not open calendar</string>
+
+    <string name="legal_section">Legal</string>
+    <string name="eula_title">End User License Agreement</string>
+    <string name="terms_title">Terms of Service</string>
+    <string name="privacy_title">Privacy Policy</string>
+    <string name="legal_effective">Effective: 23 September 2026</string>
+    <string name="legal_disclaimer">This is an unofficial utility app. McDonald\'s and mymcd.eu are trademarks of their respective owners.</string>
 </resources>

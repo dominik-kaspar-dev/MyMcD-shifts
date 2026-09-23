@@ -1,0 +1,33 @@
+PODMÍNKY POUŽÍVÁNÍ
+MyMcD Shifts
+Platné od: 23. září 2026
+
+1. Popis služby
+MyMcD Shifts je mobilní aplikace, která zobrazuje informace o směnách načtené z vašeho vlastního účtu mymcd.eu / next.mymcd.eu. Aplikace je nepovinný software a není oficiálním produktem McDonald's.
+
+2. Účty
+Musíte mít platný účet u poskytovatele rozvrhu a být oprávněni k zobrazení načítaných dat. Přihlašovací údaje chraňte.
+
+3. Povolené použití
+Zavazujete se Aplikaci nezneužívat, nenarušovat její provoz, neshromažďovat data jiných uživatelů ani neporušovat zákon.
+
+4. Dostupnost
+Aplikaci můžeme kdykoli aktualizovat, pozastavit nebo ukončit. Rozvrh závisí na dostupnosti a přesnosti třetích stran.
+
+5. Data
+Data o směnách náleží vám a/nebo vašemu zaměstnavateli podle pravidel upstream služby.
+
+6. Záruky
+Používáte na vlastní riziko. Pro důležité rozhodování o docházce si směny vždy ověřte v oficiálním zdroji.
+
+7. Omezení odpovědnosti
+V rozsahu povoleném zákonem vývojář nenese odpovědnost za škody z použití Aplikace ani za nesprávná či chybějící data.
+
+8. Odškodnění
+Souhlasíte s odškodněním vývojáře při zneužití Aplikace nebo porušení těchto podmínek.
+
+9. Právo
+Řídí se právem platným v místě bydliště vývojáře, pokud spotřebitelské právo neurčí jinak.
+
+10. Kontakt
+GitHub repozitář projektu.
