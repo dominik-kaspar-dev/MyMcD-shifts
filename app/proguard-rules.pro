@@ -1,0 +1,3 @@
+-keep class eu.mymcd.shifts.** { *; }
+-dontwarn okhttp3.**
+-dontwarn okio.**

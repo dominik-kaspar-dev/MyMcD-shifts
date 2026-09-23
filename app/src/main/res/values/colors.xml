@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="mcd_red">#DA291C</color>
+    <color name="mcd_yellow">#FFC72C</color>
+    <color name="mcd_green">#00644A</color>
+    <color name="widget_bg">#1A1A1A</color>
+    <color name="widget_title">#FFC72C</color>
+    <color name="widget_text">#F5F5F5</color>
+    <color name="widget_dim">#B0B0B0</color>
+    <color name="ic_launcher_background">#DA291C</color>
+</resources>

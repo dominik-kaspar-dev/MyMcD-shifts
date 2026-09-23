@@ -1,0 +1,29 @@
+# Gradle
+.gradle/
+build/
+app/build/
+.kotlin/
+
+# Local config / secrets — never commit
+local.properties
+keystore.properties
+release.keystore
+*.jks
+*.keystore
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# APKs (deliver separately)
+*.apk
+*.aab
+
+# Captures
+captures/
+*.hprof
+
+# Archives
+dist/*.zip
